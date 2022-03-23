@@ -29,15 +29,16 @@ connection.once("open", () => {
 });
 const { connect } = require("mongodb");
 
-
-const complaintsRouter = require("./routes/ComplaintRoute");
-const contactus = require("./routes/ContactusRoute");
-
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);
 });
 
+//----------------------- Begin ----------------------------------//
 
+const complaintsRouter = require("./routes/ComplaintRoute");
+const contactus = require("./routes/ContactusRoute");
 
 app.use("/complaint", complaintsRouter );
 app.use("/contactus", contactus);
+
+//------------------------ End ----------------------------------//

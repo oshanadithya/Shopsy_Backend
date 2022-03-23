@@ -35,10 +35,10 @@ app.listen(PORT, () => {
 
 //----------------------- Begin ----------------------------------//
 
-const complaintsRouter = require("./routes/ComplaintRoute");
-const contactus = require("./routes/ContactusRoute");
+const ContactUs = require("./routes/ContactusRoute");
 
-app.use("/complaint", complaintsRouter );
-app.use("/contactus", contactus);
+//---------------------------------------------------------------//
+
+app.use("/ContactUs", ContactUs);
 
 //------------------------ End ----------------------------------//

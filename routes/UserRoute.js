@@ -1,17 +1,16 @@
 const router = require("express").Router();
 let User  = require("../models/Users.js");
-const { json } = require("express");
 
 //user account creating route
 router.route("/add").post((req, res) => {
     const {
-      FirstName,
-      LastName,
-      BirthDay,
-      PhoneNo,
-      Email,
-      Gender,
-      Password,
+        FirstName,
+        LastName,
+        BirthDay,
+        PhoneNo,
+        Email,
+        Gender,
+        Password
     } = req.body;
   
     const user = new User({
@@ -21,7 +20,7 @@ router.route("/add").post((req, res) => {
         PhoneNo,
         Email,
         Gender,
-        Password,
+        Password
     });
   
     user
@@ -48,10 +47,9 @@ router.route("/add").post((req, res) => {
 
   //user email retrive route
 
-  router.route("/get/:email").get((req, res) => {
-    const email = req.params.Email;
-  
-    User.findOne({ email })
+  router.route("/check/:Email").get(async (req, res) => {
+    const Email = req.params.Email;
+    await User.exists({ Email })
       .then((data) => {
         res.json(data);
         console.log(data);
@@ -60,3 +58,22 @@ router.route("/add").post((req, res) => {
         console.log(err);
       });
   });
+
+ // email retrive route
+ 
+ router.route("/get/:Email").get((req, res) => {
+    const Email = req.params.Email;
+  
+    User.findOne({ Email })
+      .then((data) => {
+        res.json(data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  
+  
+  
+  module.exports = router;

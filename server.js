@@ -36,9 +36,11 @@ app.listen(PORT, () => {
 //----------------------- Begin ----------------------------------//
 
 const ContactUs = require("./routes/ContactusRoute");
+const SellProduct = require("./routes/SellProductRoute");
 
 //---------------------------------------------------------------//
 
 app.use("/ContactUs", ContactUs);
+app.use("/SellProduct", SellProduct);
 
 //------------------------ End ----------------------------------//

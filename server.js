@@ -36,9 +36,12 @@ app.listen(PORT, () => {
 //----------------------- Begin ----------------------------------//
 
 const ContactUs = require("./routes/ContactusRoute");
+const UserRoute = require("./routes/UserRoute");
+
 
 //---------------------------------------------------------------//
 
 app.use("/ContactUs", ContactUs);
+app.use("/User", UserRoute);
 
 //------------------------ End ----------------------------------//

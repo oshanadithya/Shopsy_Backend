@@ -37,6 +37,56 @@ router.route("/").get((req,res)=>{
     });
 });
 
+/////////////////////////////////////////////////Retrive single//////////////////////////////////////////////////////////////////////////
 
+router.route("/getProduct/:id").get(async(req, res) => {
+    let pid = req.params.id;
+    await SellProduct.findOne({pid})
+    .then((data) => {
+        res.status_(200).send({status: "Product fetched"});
+        res.json(data);
+    }).catch(() => {
+        console.log(err.message);
+        res.status(500).send({status: "Error with get product", error: err.message});
+    });
+});
+
+/////////////////////////////////////////////////Update single//////////////////////////////////////////////////////////////////////////
+
+router.route("/updateProduct/:id").put(async(req, res)=>{
+    let prid = req.params.id;
+    const {pname, cname, pid, price, expdate, mandate, desc} = req.body;
+
+    const updateProduct = {
+        pname,
+        cname,
+        pid,
+        price,
+        expdate,
+        mandate,
+        desc
+    }
+
+    const update = await SellProduct.findByIdAndUpdate(prid, updateProduct).then(()=>{
+        res.status(200).send({status: "Product updated"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status: "Error with updating data"});
+    });
+});
+
+///////////////////////////////////////////////////////Delete///////////////////////////////////////////////////////////////////
+
+router.route("/deleteProduct/:id").delete(async(req, res) => {
+    let del = req.params.id;
+    await SellProduct.findByIdAndDelete(del)
+    .then(() =>{
+        res.status(200).send({status: "Product deleted"});
+        res.json("Product deleted!");
+    }).catch((err)=>{
+        console.log(err.message);
+        res.status(500).send({status: "Error with delete product", error: err.message})
+    });
+});
 
 module.exports = router;

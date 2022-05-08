@@ -10,9 +10,14 @@ dotenv.config();
 
 const PORT = process.env.port || 8070;
 
+const postRoutes = require('./routes/delivery');
+const complaintRoutes = require('./routes/complaints');
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(postRoutes);
+app.use(complaintRoutes);
 
 const URL = process.env.MONGODB_URL;
 

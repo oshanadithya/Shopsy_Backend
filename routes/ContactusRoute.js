@@ -1,19 +1,17 @@
 const router = require("express").Router();
-let Contactus  = require("../models/Contactus");
+let ContactUs  = require("../models/Contactus");
 const { json } = require("express");
 
 router.route("/addMessage").post((req,res)=>{
-    const fname = req.body.fname;
-    const lname = req.body.lname;
+    const name = req.body.name;
     const email = req.body.email;
-    const contact = Number(req.body.contact);
+    const subject = (req.body.subject);
     const message = req.body.message;
 
-    const newMessage = new Contactus({
-        fname,
-        lname,
+    const newMessage = new ContactUs({
+        name,
         email,
-        contact,
+        subject,
         message
     });
 

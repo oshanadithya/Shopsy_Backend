@@ -43,8 +43,5 @@ const SellProduct = require("./routes/SellProductRoute");
 app.use("/ContactUs", ContactUs);
 app.use("/SellProduct", SellProduct);
 
-<<<<<<< Updated upstream
 //------------------------ End ----------------------------------//
-=======
-//------------------------ End ----------------------------------//
->>>>>>> Stashed changes
+

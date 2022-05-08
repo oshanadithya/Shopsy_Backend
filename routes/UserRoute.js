@@ -10,6 +10,10 @@ router.route("/add").post((req, res) => {
         PhoneNo,
         Email,
         Gender,
+        CardType,
+        CardNumber,
+        CardExpDate,
+        CardCVC,
         Password
     } = req.body;
   
@@ -20,6 +24,10 @@ router.route("/add").post((req, res) => {
         PhoneNo,
         Email,
         Gender,
+        CardType,
+        CardNumber,
+        CardExpDate,
+        CardCVC,
         Password
     });
   
@@ -32,6 +40,10 @@ router.route("/add").post((req, res) => {
         console.log(err);
       });
   });
+
+  //payment method add
+
+
 
   //user data retrive route
 
@@ -94,7 +106,7 @@ router.route('/update-user/:Email').put(async (req, res) => {
 
   console.log(updates);
 
-  await user.findOneAndUpdate({Email}, updates)
+  await User.findOneAndUpdate({Email}, updates)
   .then(() => {
     res.json("Updated Sucessfully!");
   })
@@ -103,6 +115,19 @@ router.route('/update-user/:Email').put(async (req, res) => {
   });
 });
 
+//delete function
+
+router.route("/delete-account/:Email").delete(async (req, res) => {
+  let Email = req.params.Email;
+
+  await User.findOneAndDelete({ Email })
+    .then(() => {
+      res.json("Account Delete successful!");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 
 

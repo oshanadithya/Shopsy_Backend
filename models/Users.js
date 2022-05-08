@@ -11,7 +11,7 @@ const userSchema = new Schema({
         required : true
     },
     BirthDay : {
-        type : Date,
+        type : String,
         required : true
     },
     PhoneNo : {
@@ -26,10 +26,31 @@ const userSchema = new Schema({
         type : String,
         required : true
     },
+
+    CardType : {
+        type : String,
+        required : true
+    },
+    CardNumber : {
+        type : String,
+        required : true
+    },
+    CardExpDate : {
+        type : String,
+        required : true
+    },
+    CardCVC : {
+        type : String,
+        required : true
+    },   
+
     Password : {
         type : String,
         required : true
     },
+
+    
+
 })
 
 const User = mongoose.model("User", userSchema);

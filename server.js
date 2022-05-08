@@ -51,12 +51,12 @@ app.listen(PORT, () => {
 //----------------------- Begin ----------------------------------//
 
 const ContactUs = require("./routes/ContactusRoute");
-const SellProduct = require("./routes/SellProductRoute");
+const Users = require("./routes/UserRoute");
+
 
 //---------------------------------------------------------------//
 
 app.use("/ContactUs", ContactUs);
-app.use("/SellProduct", SellProduct);
+app.use("/users", Users);
 
 //------------------------ End ----------------------------------//
-

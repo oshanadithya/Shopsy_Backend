@@ -1,6 +1,8 @@
 const router = require("express").Router();
 let Supplier = require("../models/Supplier");
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const auth = require('../middleware/auth')
 
 /////////////  ADD SUPPLIER ROUTE /////////////
 
@@ -14,7 +16,6 @@ router.route("/add").post((req,res)=>{
     const productCategory = req.body.productCategory;
     const productID  = req.body.productID;
     const description = req.body.description;
-    const priceRange = Number(req.body.priceRange);
     const username = req.body.username;
     const password = req.body.password;
     const confirmPass = req.body.confirmPass;
@@ -28,12 +29,11 @@ router.route("/add").post((req,res)=>{
         productCategory, 
         productID,
         description, 
-        priceRange,
         username,
         password,
         confirmPass
     })
-
+    //const token = await newSupplier.generateAuthToken();
     newSupplier.save().then(() => {
         res.json("Supplier Added")
     }).catch((err)=>{
@@ -43,49 +43,106 @@ router.route("/add").post((req,res)=>{
 })
 
 
+    //login
+
+    router.post('/login', async (req, res) => {
+        try {
+          const {username, password} = req.body
+          const Cus = await Supplier.findByCredentials(username, password)
+          const token = await Cus.generateAuthToken()
+          res.status(200).send({token: token, Cus: Cus})
+    
+        } catch (error) {
+          res.status(500).send({ error: error.message });
+          console.log(error);
+        }
+    
+      })
+
+
+          //get supplier profile
+
+    router.get("/profile", auth, async (req, res) => {
+    
+        try {
+          res
+            .status(201)
+            .send({ status: "Supplier logged in", Cus: req.Cus
+           });
+        } catch (error) {
+          res
+            .status(500)
+            .send({ status: "Error with /profile", error: error.message });
+        }
+      });
+  
+
+
+
+///////////// Get specific supplier's data /////////////
+
+router.route('/:id').get((req,res)=>{
+    let supplierID = req.params.id;
+
+    Supplier.findById(supplierID,(err,Suppliers)=>{
+        if(err){
+            return res.status(400).json({success:false,err});
+        }
+        return res.status(200).json({
+            success:true,
+            Suppliers
+        });
+    });
+ });
+
+
+
+
+
 
 /////////////  GET ALL SUPPLIER DATA /////////////
 
 router.route("/").get((req,res) => {
-    Supplier.find().then((supplier)=>{
-        res.json(supplier)
-    }).catch((err)=>{
-        console.log(err)  
+    Supplier.find().exec((err,supplier)=>{
+        if(err){
+
+            return res.status(400),json({
+
+                error:err
+
+            });
+
+        }
+    return res.status(200).json({
+        success:true,
+        supplier:supplier
     })
 }) 
-
+})
 
 
 /////////////  UPDATE SUPPLIER DATA /////////////
 
-router.route("/update/:id").put(async  (req,res) => {
-    let userId = req.params.id;
-    const {companyID, companyName, address, contactNo, email, productCategory,
-         productID, description, priceRange, username, password, confirmPass} = req.body;     //destructure
+router.route('/update/:id').put((req,res)=>{
+    Supplier.findByIdAndUpdate(
+        req.params.id,{
+            $set:req.body
+        },
+        (err)=>{
+            
+            if(err){
+                return res.status(400).json({error:err});
+            }
+            
+            return res.status(200).json({
+                success: "Update Successfully"
+        });
+    });
+});
 
-    const updateSupplier = {
-        companyID,
-        companyName, 
-        address,
-        contactNo, 
-        email,
-        productCategory, 
-        productID,
-        description, 
-        priceRange,
-        username,
-        password,
-        confirmPass 
-    }
 
-    const update = await Supplier.findByIdAndUpdate(userId, updateSupplier).then(() => {
-        res.status(200).send({status: "User Update"})
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).send({status: "Error with Update data", error: err.message});
-    })
-})
 
+///////////////  Generate Report  ////////////////
 
 
 /////////////  DELETE SUPPLIER DATA /////////////
@@ -100,6 +157,8 @@ router.route("/delete/:id").delete(async(req,res) => {
         res.status(500).send({status: "Error with delete User", error: err.message});
     })
 })
+
+
 
 
 

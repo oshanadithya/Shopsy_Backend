@@ -1,5 +1,21 @@
 const router = require("express").Router();
 let User  = require("../models/Users.js");
+let BuyHistory = require("../models/BuyHistory");
+
+
+
+//report get function
+router.route("/report").get((req, res) => {
+  BuyHistory.find()
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+
 
 //user account creating route
 router.route("/add").post((req, res) => {
@@ -40,9 +56,6 @@ router.route("/add").post((req, res) => {
         console.log(err);
       });
   });
-
-  //payment method add
-
 
 
   //user data retrive route
@@ -97,7 +110,7 @@ router.route("/get_one/:id").get(async(req,res)=>{s
     });
   });
 
-  //update Route
+  //user details update function
 router.route('/update-user/:Email').put(async (req, res) => {
 
   const updates = req.body;
@@ -114,6 +127,27 @@ router.route('/update-user/:Email').put(async (req, res) => {
     console.log(err);
   });
 });
+
+//payment details update function
+
+router.route('/update-payment/:Email').put(async (req, res) => {
+
+  const updates = req.body;
+
+  let Email = req.params.Email;
+
+  console.log(updates);
+
+  await User.findOneAndUpdate({Email}, updates)
+  .then(() => {
+    res.json("Updated Sucessfully!");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+});
+
+
 
 //delete function
 

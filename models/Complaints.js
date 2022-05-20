@@ -1,43 +1,33 @@
 const mongoose = require('mongoose');
-
-const complaintSchema = new mongoose.Schema({
-
-   
-
-    customerName : {
+const Schema = mongoose.Schema;
+const complaintSchema = new Schema({
+    name : {
         type : String,
-        required: true
+        required : true
     },
-    complaintId : {
+    email : {
         type : String,
-        required: true
+        required : true
     },
-    emailAddress :{
-        type :String,
-        required:true
+    contact : {
+        type : Number,
+        required : true
     },
-    contactNo :{
-        type:Number,
-        required:true
+    select : {
+        type : String,
+        required : true
     },
-    Date :{
-        type:String,
-        required:true
+    complaint : {
+        type : String,
+        required : true
     },
-    TypeOfComplaint :{
-        type:String,
-        required:true
-    },
-    Complaint :{
-        type:String,
-        required:true
-    },
-   
+    date : { 
+        type : Date,
+        required : true
+    }
 
-    
-      
+})
 
+const Complaint = mongoose.model("Complaint", complaintSchema);
 
-});
-
-module.exports = mongoose.model('Complaints',complaintSchema);
+module.exports = Complaint;

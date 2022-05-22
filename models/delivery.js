@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const complaintSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
 
    
 
@@ -8,31 +8,42 @@ const complaintSchema = new mongoose.Schema({
         type : String,
         required: true
     },
-    complaintId : {
+    Date : {
         type : String,
         required: true
     },
-    emailAddress :{
+    deliveryAddress :{
         type :String,
         required:true
     },
-    contactNo :{
+    NoOfOrders :{
         type:Number,
         required:true
     },
-    Date :{
+    OrderID :{
         type:String,
         required:true
     },
-    TypeOfComplaint :{
+    CustomerPhone :{
         type:String,
         required:true
     },
-    Complaint :{
+    driverName :{
         type:String,
         required:true
     },
-   
+    driverPhone :{
+        type:String,
+        required:true
+    },
+    vehicleNo :{
+        type:String,
+        required:true
+    },
+    deliveryStatus :{
+        type:String,
+        required:true
+    },
 
     
       
@@ -40,4 +51,4 @@ const complaintSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Complaints',complaintSchema);
+module.exports = mongoose.model('Posts',postSchema);

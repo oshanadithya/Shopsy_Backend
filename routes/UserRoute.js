@@ -1,19 +1,6 @@
 const router = require("express").Router();
 let User  = require("../models/Users.js");
-let BuyHistory = require("../models/BuyHistory");
 
-
-
-//report get function
-router.route("/report").get((req, res) => {
-  BuyHistory.find()
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
 
 
 

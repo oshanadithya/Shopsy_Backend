@@ -52,13 +52,11 @@ app.listen(PORT, () => {
 
 const ContactUs = require("./routes/ContactusRoute");
 const Users = require("./routes/UserRoute");
-const BuyHistory = require("./routes/BuyHistoryRoute");
 
 
 //---------------------------------------------------------------//
 
 app.use("/ContactUs", ContactUs);
 app.use("/users", Users);
-app.use("/user-report", BuyHistory);
 
 //------------------------ End ----------------------------------//
